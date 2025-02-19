@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GPA Calculator</title>
+    <style>
+
+@font-face {
+    font-family: 'MyFont';
+    src: url('font.ttf');
+    font-weight: normal;
+    font-style: normal;
+}
+body {
+    font-family: 'MyFont', sans-serif;
+    margin: 20px;
+    text-align: center;
+    background-color: #f4f4f9;
+}
+
+.container {
+    max-width: 600px;
+    margin: auto;
+    padding: 30px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+h2 {
+    color: #333;
+    font-size: 26px;
+}
+
+.course {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    padding: 10px;
+    background: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+input, select {
+    padding: 10px;
+    margin: 5px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 16px;
+}
+
+button {
+    padding: 12px 20px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+button:hover {
+    opacity: 0.85;
+    transform: scale(1.05);
+}
+
+#addCourseBtn {
+    background-color: #007bff;
+    color: white;
+    box-shadow: 0 3px 7px rgba(0, 123, 255, 0.3);
+}
+
+#calculateGpaBtn {
+    background-color: #28a745;
+    color: white;
+    box-shadow: 0 3px 7px rgba(40, 167, 69, 0.3);
+}
+
+.removeCourseBtn {
+    background-color: #dc3545;
+    color: white;
+    font-size: 14px;
+    padding: 6px 10px;
+    box-shadow: 0 3px 7px rgba(220, 53, 69, 0.3);
+}
+
+#gpaResult {
+    margin-top: 20px;
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #333;
+}
+
+
+      
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>GPA Calculator</h2>
+        <div id="courses"></div>
+        <button id="addCourseBtn">Add Course</button>
+        <button id="calculateGpaBtn">Calculate GPA</button>
+        <h3 id="gpaResult">GPA: --</h3>
+    </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+    document.getElementById("addCourseBtn").addEventListener("click", addCourse);
+    document.getElementById("calculateGpaBtn").addEventListener("click", calculateGPA);
+});
+
+const gradeScale = {
+    "A": 5.0,
+    "B": 4.0,
+    "C": 3.0,
+    "D": 2.0,
+    "E": 1.0,
+    "F": 0.0
+};
+
+function addCourse() {
+    const courseDiv = document.createElement("div");
+    courseDiv.classList.add("course");
+    courseDiv.innerHTML = `
+        <input type="text" class="courseName" placeholder="Course Name" required>
+        <select class="grade">
+            <option value="5.0">A</option>
+            <option value="4.0">B</option>
+            <option value="3.0">C</option>
+            <option value="2.0">D</option>
+            <option value="1.0">E</option>
+            <option value="0.0">F</option>
+        </select>
+        <input type="number" class="credits" placeholder="Credits" min="1" required>
+        <button class="removeCourseBtn" onclick="removeCourse(this)">X</button>
+    `;
+    document.getElementById("courses").appendChild(courseDiv);
+}
+
+function removeCourse(button) {
+    button.parentElement.remove();
+}
+
+function calculateGPA() {
+    let totalPoints = 0, totalCredits = 0;
+    let courses = document.querySelectorAll(".course");
+    
+    if (courses.length === 0) {
+        document.getElementById("gpaResult").innerText = "GPA: --";
+        return;
+    }
+    
+    courses.forEach(course => {
+        let grade = parseFloat(course.querySelector(".grade").value);
+        let credits = parseInt(course.querySelector(".credits").value);
+
+        // Validate inputs: Ignore invalid credit values instead of stopping everything
+        if (!isNaN(grade) && !isNaN(credits) && credits > 0) {
+            totalPoints += grade * credits;
+            totalCredits += credits;
+        }
+    });
+
+    const gpa = totalCredits > 0 ? (totalPoints / totalCredits).toFixed(2) : "--";
+    document.getElementById("gpaResult").innerText = `GPA: ${gpa}`;
+}
+
+    </script>
+</body>
+</html>
