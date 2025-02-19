@@ -95,6 +95,44 @@ button:hover {
     color: #333;
 }
 
+/* Styling for How to Use Section */
+.how-to-use {
+    max-width: 600px;
+    margin: 40px auto;
+    padding: 20px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    text-align: left;
+}
+
+.how-to-use h3 {
+    color: #007bff;
+    font-size: 22px;
+    margin-bottom: 10px;
+}
+
+.how-to-use ul {
+    list-style: none;
+    padding: 0;
+}
+
+.how-to-use ul li {
+    font-size: 16px;
+    padding: 8px 0;
+    border-bottom: 1px solid #ddd;
+}
+
+.how-to-use ul li:last-child {
+    border-bottom: none;
+}
+
+.how-to-use ul li::before {
+    content: "✔ ";
+    color: #28a745;
+    font-weight: bold;
+}
+
 
       
     </style>
@@ -107,6 +145,22 @@ button:hover {
         <button id="calculateGpaBtn">Calculate GPA</button>
         <h3 id="gpaResult">GPA: --</h3>
     </div>
+
+<!-- How to Use Section -->
+<div class="how-to-use">
+    <h3>📘 How to Use</h3>
+    <ul>
+        <li>Click "Add Course" to insert a new course.</li>
+        <li>Enter the <strong>Course Name</strong>.</li>
+        <li>Select a <strong>Grade (A-F)</strong> from the dropdown menu.</li>
+        <li>Enter the <strong>Credit Unit</strong> for the course.</li>
+        <li>Repeat for multiple courses.</li>
+        <li>Click <strong>"Calculate GPA"</strong> to see your result.</li>
+        <li>Modify grades or credit units and recalculate.</li>
+        <li>Click the <strong>"X"</strong> button to remove a course.</li>
+    </ul>
+</div>
+
     <script>
         document.addEventListener("DOMContentLoaded", function() {
     document.getElementById("addCourseBtn").addEventListener("click", addCourse);
